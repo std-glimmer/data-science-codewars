@@ -3,19 +3,17 @@ import os
 import mining
 from time import sleep
 
-TARGET_DIR = ""
-
 # Вечный цикл
 # Программа рассчитана на потенциальные падения и в случае перезапуска продолжит работу в штатном режиме
-def run_forever():
+def run_forever(dir):
     try:
         while True:
-            mining.start(TARGET_DIR)
+            mining.start(dir)
             sleep(10)
             raise Exception("Error simulated!")
     except Exception:
         print("Something crashed your program. Let's restart it")
-        run_forever()
+        run_forever(dir)
         handle_exception()
 
 def handle_exception():
@@ -30,12 +28,10 @@ def main():
         else:
             dir = sys.argv[1]
             if (os.path.isdir(dir)):
-                TARGET_DIR = dir
-
                 if (len(sys.argv) >= 3):
-                    mining.start(TARGET_DIR)
+                    mining.start(dir)
                 else:
-                    run_forever()
+                    run_forever(dir)
                 
             else:
                 print("Invalid target dir")
