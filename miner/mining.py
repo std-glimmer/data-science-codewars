@@ -98,10 +98,22 @@ def start(targetPath):
             if saveTaskToFile(taskInfo):
                 print("Saved task", task["id"], "|", taskC, "/", len(userCompletedTasksData))
     
-            taskInfo['completedAt'] = task['completedAt']
-            taskInfo['completedLanguages'] = task['completedLanguages']
+            task["url"]                 = taskInfo["url"]
+            task["category"]            = taskInfo["category"]
+            task["description"]         = taskInfo["description"]
+            task["tags"]                = taskInfo["tags"]
+            task["languages"]           = taskInfo["languages"]
+            task["createdBy"]           = taskInfo["createdBy"]
+            task["publishedAt"]         = taskInfo["publishedAt"]
+            task["approvedBy"]          = taskInfo["approvedBy"]
+            task["approvedAt"]          = taskInfo["approvedAt"]
+            task["totalCompleted"]      = taskInfo["totalCompleted"]
+            task["totalAttempts"]       = taskInfo["totalAttempts"]
+            task["totalStars"]          = taskInfo["totalStars"]
+            task["voteScore"]           = taskInfo["voteScore"]
+            task["contributorsWanted"]  = taskInfo["contributorsWanted"]
+            task["unresolved"]          = taskInfo["unresolved"]
             
-            task = taskInfo
             taskC = taskC + 1
     
         return userCompletedTasksData, userTotalPages, userTotalTaskCount
