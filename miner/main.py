@@ -31,8 +31,7 @@ def main():
             dir = sys.argv[1]
             if (os.path.isdir(dir)):
                 TARGET_DIR = dir
-                #run_forever()
-                mining.start(TARGET_DIR)
+                run_forever()
             else:
                 print("Invalid target dir")
 
