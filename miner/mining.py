@@ -1,6 +1,7 @@
 import get_usernames as gu
 import requests
 import json
+import os
 
 def start(targetPath):
     
@@ -9,30 +10,48 @@ def start(targetPath):
     API_CHALLENGES_REQUEST  = 'https://www.codewars.com/api/v1/code-challenges/{challenge}'
     GITHUB_USER_REQUEST     = 'https://api.github.com/users/{user}'
 
-    USER_FILE_PATH          = "loadedusers.txt"
-    TASKS_FILE_PATH         = "loadedtasks.txt"
-    USERS_DATA_PATH         = "users.json"
-    TASKS_DATA_PATH         = "tasks.json"
-
     # Настройка путей
-    USER_FILE_PATH = targetPath + USER_FILE_PATH
-    TASKS_FILE_PATH = targetPath + TASKS_FILE_PATH
-    USERS_DATA_PATH = targetPath + USERS_DATA_PATH
-    TASKS_DATA_PATH = targetPath + TASKS_DATA_PATH
+    USER_FILE_PATH          = targetPath + "loadedusers.txt"
+    TASKS_FILE_PATH         = targetPath + "loadedtasks.txt"
+    USERS_DATA_PATH         = targetPath + "users.json"
+    TASKS_DATA_PATH         = targetPath + "tasks.json"
+
+    if not os.path.exists(USER_FILE_PATH):
+        os.mknod(USER_FILE_PATH)
+        print(USER_FILE_PATH, "created.")
+    if not os.path.exists(TASKS_FILE_PATH):
+        os.mknod(TASKS_FILE_PATH)
+        print(TASKS_FILE_PATH, "created.")
+    if not os.path.exists(USERS_DATA_PATH):
+        os.mknod(USERS_DATA_PATH)
+        print(USERS_DATA_PATH, "created.")
+    if not os.path.exists(TASKS_DATA_PATH):
+        os.mknod(TASKS_DATA_PATH)
+        print(TASKS_DATA_PATH, "created.")
 
     # Получаем список пользователей
     originalUserList = gu.getLeadernames()
     
     # Создаем / открываем файл со списком загруженных пользователей
-    loadedusersfile = open(USER_FILE_PATH, 'a+')
+    loadedusersfile = open(USER_FILE_PATH, 'r+')
     loadedusers = loadedusersfile.read().splitlines()
+    loadedusersfile.close()
+    loadedusersfile = open(USER_FILE_PATH, 'a+')
     
     # Убираем из списка уже загруженных пользователей    
     originalUserList = originalUserList.difference(loadedusers)
     
     # Создаем / открываем файл со списком загруженных задач
-    loadedtasksfile = open(TASKS_FILE_PATH, 'a+')
+    loadedtasksfile = open(TASKS_FILE_PATH, 'r+')
     loadedtasks = loadedtasksfile.read().splitlines()
+    loadedtasksfile.close()
+    loadedtasksfile = open(TASKS_FILE_PATH, 'a+')
+    
+    print("Users will be recorded to " + USERS_DATA_PATH)
+    print("Tasks will be recorded to " + TASKS_DATA_PATH)
+    print("Already loaded ", len(loadedusers), " users.")
+    print("Already loaded ", len(loadedtasks), " tasks.")
+    print("Found new ", len(originalUserList), " users.")
     
     # Создаем / открываем файл пользователей
     usersFile = open(USERS_DATA_PATH, 'a', newline="", encoding="utf-8")
