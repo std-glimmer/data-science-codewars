@@ -2,18 +2,18 @@ import get_usernames as gu
 import requests
 import json
 
-API_USER_REQUEST        = "https://www.codewars.com/api/v1/users/{user}"
-API_COMPLETED_REQUEST   = "https://www.codewars.com/api/v1/users/{user}/code-challenges/completed?page={page}"
-API_CHALLENGES_REQUEST  = 'https://www.codewars.com/api/v1/code-challenges/{challenge}'
-GITHUB_USER_REQUEST     = 'https://api.github.com/users/{user}'
-GITHUB_TOKEN            = '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'
-
-USER_FILE_PATH          = "loadedusers.txt"
-TASKS_FILE_PATH         = "loadedtasks.txt"
-USERS_DATA_PATH         = "users.json"
-TASKS_DATA_PATH         = "tasks.json"
-
 def start(targetPath):
+    
+    API_USER_REQUEST        = "https://www.codewars.com/api/v1/users/{user}"
+    API_COMPLETED_REQUEST   = "https://www.codewars.com/api/v1/users/{user}/code-challenges/completed?page={page}"
+    API_CHALLENGES_REQUEST  = 'https://www.codewars.com/api/v1/code-challenges/{challenge}'
+    GITHUB_USER_REQUEST     = 'https://api.github.com/users/{user}'
+
+    USER_FILE_PATH          = "loadedusers.txt"
+    TASKS_FILE_PATH         = "loadedtasks.txt"
+    USERS_DATA_PATH         = "users.json"
+    TASKS_DATA_PATH         = "tasks.json"
+
     # Настройка путей
     USER_FILE_PATH = targetPath + USER_FILE_PATH
     TASKS_FILE_PATH = targetPath + TASKS_FILE_PATH

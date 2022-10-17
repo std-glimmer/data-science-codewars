@@ -1,7 +1,7 @@
 import sys
 import os
+import mining
 from time import sleep
-from mining import start
 
 TARGET_DIR = ""
 
@@ -10,7 +10,7 @@ TARGET_DIR = ""
 def run_forever():
     try:
         while True:
-            start(TARGET_DIR)
+            mining.start(TARGET_DIR)
             sleep(10)
             raise Exception("Error simulated!")
     except Exception:
@@ -31,7 +31,8 @@ def main():
             dir = sys.argv[1]
             if (os.path.isdir(dir)):
                 TARGET_DIR = dir
-                run_forever()
+                #run_forever()
+                mining.start(TARGET_DIR)
             else:
                 print("Invalid target dir")
 
