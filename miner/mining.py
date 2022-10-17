@@ -69,6 +69,7 @@ def start(targetPath):
     
     # Получить информацию по выполненным задачам пользователя (страница pageN)
     def getTasksInfoOnPage(user, pageN):
+        tasks = []
         userCompletedTasksPage = ""
     
         try:
@@ -81,7 +82,7 @@ def start(targetPath):
         userTotalPages = userCompletedTasksPage["totalPages"]
         userTotalTaskCount = userCompletedTasksPage["totalItems"]
         userCompletedTasksData = userCompletedTasksPage["data"]
-    
+
         taskC = 1
         # Делаем запрос на информацию по задаче и мерджим с userCompletedTasksData
         for task in userCompletedTasksData:
@@ -98,25 +99,14 @@ def start(targetPath):
             if saveTaskToFile(taskInfo):
                 print("Saved task", task["id"], "|", taskC, "/", len(userCompletedTasksData))
     
-            task["url"]                 = taskInfo["url"]
-            task["category"]            = taskInfo["category"]
-            task["description"]         = taskInfo["description"]
-            task["tags"]                = taskInfo["tags"]
-            task["languages"]           = taskInfo["languages"]
-            task["createdBy"]           = taskInfo["createdBy"]
-            task["publishedAt"]         = taskInfo["publishedAt"]
-            task["approvedBy"]          = taskInfo["approvedBy"]
-            task["approvedAt"]          = taskInfo["approvedAt"]
-            task["totalCompleted"]      = taskInfo["totalCompleted"]
-            task["totalAttempts"]       = taskInfo["totalAttempts"]
-            task["totalStars"]          = taskInfo["totalStars"]
-            task["voteScore"]           = taskInfo["voteScore"]
-            task["contributorsWanted"]  = taskInfo["contributorsWanted"]
-            task["unresolved"]          = taskInfo["unresolved"]
-            
+            taskInfo['completedAt'] = task['completedAt']
+            taskInfo['completedLanguages'] = task['completedLanguages']
+
+            tasks.append(taskInfo)
+
             taskC = taskC + 1
     
-        return userCompletedTasksData, userTotalPages, userTotalTaskCount
+        return tasks, userTotalPages, userTotalTaskCount
     
     # Оформить информацию о выполненных задачах пользователя
     def getCompletedTasks(user):
