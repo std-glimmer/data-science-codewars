@@ -3,6 +3,33 @@ import requests
 import json
 import os
 
+# Функция для считывания списка, сохраненного в файле
+def readListFromFile(filePath):
+    file = open(filePath, 'r+')
+    lst = file.read().splitlines()
+    file.close()
+    return lst
+
+# Получение и обработка списка пользователей
+def processUsernames(saved_user_ids):
+    users = []
+    before_utf_users = gu.getLeadernames()
+    # Убираем из списка уже загруженных пользователей    
+    before_utf_users = before_utf_users.difference(saved_user_ids)
+    # Проверка на совместимость с utf-8, тех кто не подходит - отсеиваем
+    for user in before_utf_users:
+        try:
+            user.encode('utf-8')
+            users.append(user)
+        except UnicodeError:
+            continue;
+    utfDiff = len(before_utf_users) - len(users)
+
+    if utfDiff > 0:
+        print(utfDiff + " users erased from list, because usernames contain restricted symbols.")
+
+    return users
+
 def start(targetPath):
     
     API_USER_REQUEST        = "https://www.codewars.com/api/v1/users/{user}"
@@ -11,66 +38,40 @@ def start(targetPath):
     GITHUB_USER_REQUEST     = 'https://api.github.com/users/{user}'
 
     # Настройка путей
-    USER_FILE_PATH          = targetPath + "loadedusers.txt"
-    TASKS_FILE_PATH         = targetPath + "loadedtasks.txt"
-    USERS_DATA_PATH         = targetPath + "users.json"
-    TASKS_DATA_PATH         = targetPath + "tasks.json"
+    USERNAMES_FILE          = targetPath + "saved_user_ids.txt"
+    TASK_IDS_FILE           = targetPath + "saved_task_ids.txt"
+    USERS_DATA_FILE         = targetPath + "users.json"
+    TASKS_DATA_FILE         = targetPath + "tasks.json"
 
-    if not os.path.exists(USER_FILE_PATH):
-        os.mknod(USER_FILE_PATH)
-        print(USER_FILE_PATH, "created.")
-    if not os.path.exists(TASKS_FILE_PATH):
-        os.mknod(TASKS_FILE_PATH)
-        print(TASKS_FILE_PATH, "created.")
-    if not os.path.exists(USERS_DATA_PATH):
-        os.mknod(USERS_DATA_PATH)
-        print(USERS_DATA_PATH, "created.")
-    if not os.path.exists(TASKS_DATA_PATH):
-        os.mknod(TASKS_DATA_PATH)
-        print(TASKS_DATA_PATH, "created.")
+    # if not os.path.exists(USERNAMES_FILE):
+    #     os.mknod(USERNAMES_FILE)
+    #     print(USERNAMES_FILE, "created.")
+    # if not os.path.exists(TASK_IDS_FILE):
+    #     os.mknod(TASK_IDS_FILE)
+    #     print(TASK_IDS_FILE, "created.")
 
-    # Получаем список пользователей
-    originalUserList = gu.getLeadernames()
+    # Читаем списки уже загруженных пользователей и задач
+    saved_user_ids = readListFromFile(USERNAMES_FILE)
+    saved_task_ids = readListFromFile(TASK_IDS_FILE)
+
+    # Получаем список пользователей из api
+    users = processUsernames(saved_user_ids)
     
-    # Создаем / открываем файл со списком загруженных пользователей
-    loadedusersfile = open(USER_FILE_PATH, 'r+')
-    loadedusers = loadedusersfile.read().splitlines()
-    loadedusersfile.close()
-    loadedusersfile = open(USER_FILE_PATH, 'a+')
+    # Открываем на запись файл со списком загруженных задач и пользователей
+    task_ids_file = open(TASK_IDS_FILE, 'a+')
+    user_ids_file = open(USERNAMES_FILE, 'a+')
     
-    # Убираем из списка уже загруженных пользователей    
-    originalUserList = originalUserList.difference(loadedusers)
-    
-    # Создаем / открываем файл со списком загруженных задач
-    loadedtasksfile = open(TASKS_FILE_PATH, 'r+')
-    loadedtasks = loadedtasksfile.read().splitlines()
-    loadedtasksfile.close()
-    loadedtasksfile = open(TASKS_FILE_PATH, 'a+')
-    
-    print("Users will be recorded to " + USERS_DATA_PATH)
-    print("Tasks will be recorded to " + TASKS_DATA_PATH)
-    print("Already loaded ", len(loadedusers), " users.")
-    print("Already loaded ", len(loadedtasks), " tasks.")
-    print("Found new ", len(originalUserList), " users.")
+    print("Users will be recorded to " + USERS_DATA_FILE)
+    print("Tasks will be recorded to " + TASKS_DATA_FILE)
+    print("Already loaded ", len(saved_user_ids), " users.")
+    print("Already loaded ", len(saved_task_ids), " tasks.")
+    print("Found new ", len(users), " users.")
     
     # Создаем / открываем файл пользователей
-    usersFile = open(USERS_DATA_PATH, 'a', newline="", encoding="utf-8")
+    usersFile = open(USERS_DATA_FILE, 'a+', newline="", encoding="utf-8")
     
     # Создаем / открываем файл задач
-    tasksFile = open(TASKS_DATA_PATH, 'a', newline="", encoding="utf-8")
-    
-    # Проверка на совместимость с utf-8, тех кто не подходит - отсеиваем
-    users = []
-    for user in originalUserList:
-        try:
-            user.encode('utf-8')
-            users.append(user)
-        except UnicodeError:
-            continue;
-    
-    utfDiff = len(originalUserList) - len(users)
-    if utfDiff > 0:
-        print(utfDiff + " users erased from list, because usernames contain restricted symbols.")
+    tasksFile = open(TASKS_DATA_FILE, 'a+', newline="", encoding="utf-8")
     
     # Служебные функции
     # ------------------------------------------------------------------------------------------------------------------
@@ -78,9 +79,9 @@ def start(targetPath):
     def saveTaskToFile(task):
         if (task and ("id" in task)):
             id = task["id"]
-            if id not in loadedtasks:
-                loadedtasks.append(id)
-                loadedtasksfile.write(id + "\n")
+            if id not in saved_task_ids:
+                saved_task_ids.append(id)
+                task_ids_file.write(id + "\n")
                 tasksFile.write(json.dumps(task) + "\n")
                 return True
     
@@ -211,7 +212,7 @@ def start(targetPath):
             'userCompletedTasks':   userCompletedTasks
         }
     
-        loadedusersfile.write(user + "\n")
+        user_ids_file.write(user + "\n")
         usersFile.write(json.dumps(rowJson) + "\n")
         
         print(user, "done.", len(users) - i, "remaining")
@@ -220,5 +221,5 @@ def start(targetPath):
     # Закрываем дескрипторы
     usersFile.close()
     tasksFile.close()
-    loadedusersfile.close()
-    loadedtasksfile.close()
+    user_ids_file.close()
+    task_ids_file.close()
