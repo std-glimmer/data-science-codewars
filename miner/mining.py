@@ -82,7 +82,9 @@ def start(targetPath):
             if id not in saved_task_ids:
                 saved_task_ids.append(id)
                 task_ids_file.write(id + "\n")
+                task_ids_file.flush()
                 tasksFile.write(json.dumps(task) + "\n")
+                tasksFile.flush()
                 return True
     
         return False
@@ -213,7 +215,9 @@ def start(targetPath):
         }
     
         user_ids_file.write(user + "\n")
+        user_ids_file.flush()
         usersFile.write(json.dumps(rowJson) + "\n")
+        usersFile.flush()
         
         print(user, "done.", len(users) - i, "remaining")
         i += 1
