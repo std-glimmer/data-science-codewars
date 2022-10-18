@@ -43,12 +43,12 @@ def start(targetPath):
     USERS_DATA_FILE         = targetPath + "users.json"
     TASKS_DATA_FILE         = targetPath + "tasks.json"
 
-    # if not os.path.exists(USERNAMES_FILE):
-    #     os.mknod(USERNAMES_FILE)
-    #     print(USERNAMES_FILE, "created.")
-    # if not os.path.exists(TASK_IDS_FILE):
-    #     os.mknod(TASK_IDS_FILE)
-    #     print(TASK_IDS_FILE, "created.")
+    if not os.path.exists(USERNAMES_FILE):
+        os.mknod(USERNAMES_FILE)
+        print(USERNAMES_FILE, "created.")
+    if not os.path.exists(TASK_IDS_FILE):
+        os.mknod(TASK_IDS_FILE)
+        print(TASK_IDS_FILE, "created.")
 
     # Читаем списки уже загруженных пользователей и задач
     saved_user_ids = readListFromFile(USERNAMES_FILE)
