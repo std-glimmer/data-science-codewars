@@ -14,3 +14,8 @@ def get_katas_cursor():
    db = get_database()
    collection = db['katas']
    return collection.find({})
+
+def selectKata(id):
+   db = get_database()
+   collection = db['katas']
+   return collection.find_one({'id' : id })
