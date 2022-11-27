@@ -28,3 +28,48 @@ def getUsernames(source):
 # Метод получения полного списка лидерам
 def getLeadernames():
     return getUsernames(LEADERBOARD_1) | getUsernames(LEADERBOARD_2) | getUsernames(LEADERBOARD_3)
+
+
+def getUsernamesFromKataList():
+    usernames = set()
+
+    page = urllib.request.urlopen("https://www.codewars.com/kata/search/?q=&beta=false&sample=true")
+    
+    data = http.client.HTTPResponse.read(page)
+    soup = BeautifulSoup(data, 'html.parser')
+
+    main = soup.find('main', { "id": "shell_content" })
+    rows = main.find_all('div', { "class" : "list-item-kata bg-ui-section p-4 rounded-lg shadow-md" })
+
+    for row in rows:
+        element = row.find('a', { "data-tippy-content" : "This kata's Sensei" })
+        if element is not None and len(element) >= 2:
+            usernames.add(element.contents[1])
+
+    return usernames
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

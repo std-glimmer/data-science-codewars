@@ -1,0 +1,1 @@
+API_CHALLENGES_REQUEST  = 'https://www.codewars.com/api/v1/code-challenges/{challenge}'

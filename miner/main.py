@@ -8,7 +8,7 @@ from time import sleep
 def run_forever(dir):
     try:
         while True:
-            mining.start(dir)
+            mining.startMiningLeaderboards(dir)
             sleep(10)
             raise Exception("Error simulated!")
     except Exception:
@@ -28,8 +28,8 @@ def main():
         else:
             dir = sys.argv[1]
             if (os.path.isdir(dir)):
-                if (len(sys.argv) >= 3):
-                    mining.start(dir)
+                if (len(sys.argv) >= 4):
+                    mining.startMiningLeaderboards(dir)
                 else:
                     run_forever(dir)
                 

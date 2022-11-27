@@ -1,86 +1,57 @@
-from pymongo import MongoClient
-import csv
+import mongoManager
+import json
 
-# Предпочитаемые языки программирования в зависимости от ранга
-
-def get_database():
-   CONNECTION_STRING = "mongodb://root:qwerty@45.12.18.238:27019/?authMechanism=DEFAULT"
-   client = MongoClient(CONNECTION_STRING)
-   return client["codewars"]
-
-def get_users_cursor():
-   db = get_database()
-   collection = db['users']
-   return collection.find({})
-
-def get_katas_cursor():
-   db = get_database()
-   collection = db['katas']
-   return collection.find({})
-
-# Статистика по популярности языков
+# Статистика по использованию языков для решения кат среди игроков разных уровней
 def get_common_stat():
-   languagesStat = {}
+   rankStat = [
+      { "rank": 1, "languagesSolutions": {}, "topLanguage": {}, "totalSolutions": 0, "totalUsers": 0 },
+      { "rank": 2, "languagesSolutions": {}, "topLanguage": {}, "totalSolutions": 0, "totalUsers": 0 },
+      { "rank": 3, "languagesSolutions": {}, "topLanguage": {}, "totalSolutions": 0, "totalUsers": 0 },
+      { "rank": 4, "languagesSolutions": {}, "topLanguage": {}, "totalSolutions": 0, "totalUsers": 0 },
+      { "rank": 5, "languagesSolutions": {}, "topLanguage": {}, "totalSolutions": 0, "totalUsers": 0 },
+      { "rank": 6, "languagesSolutions": {}, "topLanguage": {}, "totalSolutions": 0, "totalUsers": 0 },
+      { "rank": 7, "languagesSolutions": {}, "topLanguage": {}, "totalSolutions": 0, "totalUsers": 0 },
+      { "rank": 8, "languagesSolutions": {}, "topLanguage": {}, "totalSolutions": 0, "totalUsers": 0 }
+   ]
 
-   for user in get_users_cursor():
-      for t in user["userCompletedTasks"]:
-         for task in t:
-            if (type(task) is dict and "completedLanguages" in task):
-               for language in task["completedLanguages"]:
-                  if (language in languagesStat):
-                     languagesStat[language] = languagesStat[language] + 1
-                  else:
-                     languagesStat[language] = 1
+   i = 1
+   for user in mongoManager.get_users_cursor():
+      rank = abs(user["ranks"]["overall"]["rank"])
 
-   with open('popular_language.csv', 'w', newline='') as csvfile:
-      spamwriter = csv.writer(csvfile, delimiter=';', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-      spamwriter.writerow(['language', 'numbers'])
-      for language in languagesStat:
-         spamwriter.writerow([ language, languagesStat[language] ])
+      for stat in rankStat:
+         if stat["rank"] == rank:
+            stat["totalUsers"] = stat["totalUsers"] + 1
 
-# Статистика по популярности языков в зависимости от ранга
-def get_specific_stat():
-   rankStat = {}   
+            for t in user["userCompletedTasks"]:
+               for task in t:
+                  if (type(task) is dict and "completedLanguages" in task):
+                     for language in task["completedLanguages"]:
+                        stat["totalSolutions"] = stat["totalSolutions"] + 1
+                        if (language in stat["languagesSolutions"]):
+                           stat["languagesSolutions"][language] = stat["languagesSolutions"][language] + 1
+                        else:
+                           stat["languagesSolutions"][language] = 1
 
-   for user in get_users_cursor():
-      rank = user["ranks"]["overall"]["rank"]
-      languageStat = {}
+            break
 
-      for t in user["userCompletedTasks"]:
-         for task in t:
-            if (type(task) is dict and "completedLanguages" in task):
-               for language in task["completedLanguages"]:
-                  if (language in languageStat):
-                     languageStat[language] = languageStat[language] + 1
-                  else:
-                     languageStat[language] = 1
+      print("User " + str(i) + "done.")
+      i = i + 1
+   
+   # Делаем выводим самый популярный язык отдельно
+   for rank in rankStat:
+      solutions = rank["languagesSolutions"]
+      max = 0
+      maxSolution = ""
 
-      if (rank in rankStat):
-         rankS = rankStat[abs(rank)]
-         for language in languageStat:
-            if (language in rankS):
-               rankS[language] = rankS[language] + languageStat[language]
-            else:
-               rankS[language] = languageStat[language]
-      else:
-         rankStat[abs(rank)] = languageStat
+      for solution in solutions:
+         if solutions[solution] > max:
+            max = solutions[solution]
+            maxSolution = solution
+      
+      rank["topLanguage"] = { maxSolution: max }
 
-   with open('E:\\projects\\data-science-codewars\\backend\\popular_language_rank.csv', 'w', newline='') as csvfile:
-      spamwriter = csv.writer(csvfile, delimiter=';', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-      spamwriter.writerow(['language', 'numbers'])
+   with open('E:\\projects\\data-science-codewars\\backend\\languagesStat.json', 'w', newline='') as file:
+      file.write(json.dumps(rankStat))
+      file.close()
 
-      # Здесь записываем только самый популярный язык
-      for rank in rankStat:
-         max = 0
-         maxLang = ""
-         
-         for language in rankStat[rank]:
-            cnt = rankStat[rank][language]
-            
-            if cnt > max:
-               max = cnt
-               maxLang = language
-
-         spamwriter.writerow([ abs(rank), maxLang, max ])
-
-get_specific_stat()
+get_common_stat()
