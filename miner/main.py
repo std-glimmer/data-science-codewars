@@ -1,6 +1,6 @@
 import sys
 import os
-import mining
+import mining_users
 from time import sleep
 
 # Вечный цикл
@@ -8,7 +8,7 @@ from time import sleep
 def run_forever(dir):
     try:
         while True:
-            mining.startMiningLeaderboards(dir)
+            mining_users.mining_users(dir)
             sleep(10)
             raise Exception("Error simulated!")
     except Exception:
@@ -29,7 +29,7 @@ def main():
             dir = sys.argv[1]
             if (os.path.isdir(dir)):
                 if (len(sys.argv) >= 4):
-                    mining.startMiningLeaderboards(dir)
+                    mining_users.mining_users(dir)
                 else:
                     run_forever(dir)
                 
