@@ -35,7 +35,7 @@ def get_kat_category_stat():
   katas = get_kat_id_kat_dict()
   for user in get_users_cursor():
     if 'ranks' in user and 'overall' in user['ranks'] and 'rank' in user['ranks']['overall']:
-      rank = abs(user['ranks']['overall']['rank'])
+      rank = user['ranks']['overall']['rank']
       if rank not in rankKatCategoryStat:
         rankKatCategoryStat[rank] = {}
       for t in user['userCompletedTasks']:

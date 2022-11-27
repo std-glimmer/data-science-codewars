@@ -34,7 +34,7 @@ def get_time_stat(timeType = 1):
   rankKatCompletionStat = {}
   for user in get_users_cursor():
     if 'ranks' in user and 'overall' in user['ranks'] and 'rank' in user['ranks']['overall']:
-      rank = abs(user['ranks']['overall']['rank'])
+      rank = user['ranks']['overall']['rank']
       for t in user['userCompletedTasks']:
         timeDict = {}
         for task in t:
