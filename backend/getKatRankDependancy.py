@@ -30,41 +30,42 @@ def get_kat_id_kat_dict():
 
 # Статистика по категорий катов для рангов
 def get_kat_category_stat():
-  rankKatCategoryStat = {}
-  categoryNameList = []
+  rankKatTagStat = {}
+  tagNameList = []
   katas = get_kat_id_kat_dict()
   for user in get_users_cursor():
     if 'ranks' in user and 'overall' in user['ranks'] and 'rank' in user['ranks']['overall']:
-      rank = user['ranks']['overall']['rank']
-      if rank not in rankKatCategoryStat:
-        rankKatCategoryStat[rank] = {}
+      rank = abs(user['ranks']['overall']['rank'])
+      if rank not in rankKatTagStat:
+        rankKatTagStat[rank] = {}
       for t in user['userCompletedTasks']:
         for task in t:
           if (type(task) is dict and 'id' in task):
-            category = 'no category'
-            if task['id'] in katas and 'category' in katas[task['id']]:
-              category = katas[task['id']]['category']
-            if category not in categoryNameList:
-              categoryNameList.append(category)
-            if category in rankKatCategoryStat[rank]:
-              rankKatCategoryStat[rank][category] = rankKatCategoryStat[rank][category] + 1
-            else:
-              rankKatCategoryStat[rank][category] = 1
-  name = 'rank_kat_category_stat.csv'
-  categoryNameList.sort()
-  sortedDict = collections.OrderedDict(sorted(rankKatCategoryStat.items()))
+            tags = []
+            if task['id'] in katas and 'tags' in katas[task['id']]:
+              tags = katas[task['id']]['tags']
+            for tag in tags:
+              if tag not in tagNameList:
+                tagNameList.append(tag)
+              if tag in rankKatTagStat[rank]:
+                rankKatTagStat[rank][tag] = rankKatTagStat[rank][tag] + 1
+              else:
+                rankKatTagStat[rank][tag] = 1
+  name = 'rank_kat_tag_stat.csv'
+  tagNameList.sort()
+  sortedDict = collections.OrderedDict(sorted(rankKatTagStat.items()))
   with open(name, 'w', newline='') as csvfile:
     spamwriter = csv.writer(csvfile, delimiter=';', quotechar='|', quoting=csv.QUOTE_MINIMAL)
     names = ['№', 'rank']
-    for cat in categoryNameList:
-      names.append(cat)
+    for tag in tagNameList:
+      names.append(tag)
     spamwriter.writerow(names)
     # записываем ранг и статистику
-    for rank, categoryList in sortedDict.items():
+    for rank, tagList in sortedDict.items():
       row = [abs(rank), rank]
-      for categoryName in categoryNameList:
-        if categoryName in categoryList:
-          row.append(categoryList[categoryName])
+      for tag in tagNameList:
+        if tag in tagList:
+          row.append(tagList[tag])
         else:
           row.append(0)
       spamwriter.writerow(row)

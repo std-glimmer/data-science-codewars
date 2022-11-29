@@ -1,0 +1,188 @@
+category;Avg kat completed
+ASCII;1.6666666666666667
+ASCII Art;29.652173913043477
+Abstraction;1.0
+Advanced Language Features;6.260869565217392
+Algebra;19.613636363636363
+Algorithms;26.621582385676263
+Angular;46.333333333333336
+Arithmetic;5.612903225806452
+Arrays;36.28176431863068
+Artificial Intelligence;27.285714285714285
+Asynchronous;8.75
+Babel;2.0
+Backend;9.4
+Basic Language Features;8.26595744680851
+Big Integers;59.10526315789474
+Binary;31.232758620689655
+Binary Search Trees;21.4
+Binary Trees;40.77777777777778
+Bits;35.46969696969697
+Booleans;23.2
+Bugs;15.457142857142857
+Case/Switch Statements;2.0
+Cellular Automata;27.333333333333332
+Character Encodings;1.6666666666666667
+Chars;1.0
+Ciphers;28.183908045977013
+Classes;1.0
+Collections;2.3333333333333335
+Combinatorics;19.615384615384617
+Compilers;27.3
+Computability Theory;2.0
+Concurrency;2.6666666666666665
+Conditional Statements;13.2
+Constructors;1.0
+Control Flow;5.791044776119403
+Cryptography;16.126126126126128
+DRY;3.0
+Data;2.857142857142857
+Data Frames;8.75
+Data Science;20.17241379310345
+Data Structures;20.953125
+Data Types;7.081871345029239
+Databases;43.76086956521739
+Date Time;28.024390243902438
+Dates/Time;1.9090909090909092
+Debugging;57.42253521126761
+Decimals;2.0
+Declarative Programming;7.6923076923076925
+Decorator;11.857142857142858
+Decryption;1.0
+Design Patterns;18.136363636363637
+Design Principles;7.0
+Dictionary;1.4
+Discrete Mathematics;17.25
+Domain Specific Languages;14.25
+Dynamic Arrays;1.5
+Dynamic Programming;20.78181818181818
+Encoding;1.4
+Encryption;3.0
+Esoteric Languages;29.272727272727273
+Event Handling;44.8
+Express;14.0
+Expressions;269.0
+Filtering;57.095238095238095
+Flask;4.0
+Floats/Doubles;1.0
+Formats;1.6666666666666667
+Formatting;26.8
+Functional Programming;34.1044776119403
+Functions;1.631578947368421
+Fundamentals;32.762872154115584
+Game Solvers;21.404761904761905
+Games;13.170175438596491
+Genetic Algorithms;46.285714285714285
+Geometry;22.290697674418606
+Graph Theory;12.65
+Graphics;9.736842105263158
+Graphs;11.466666666666667
+Hashes;2.5
+Haskell Packages;49.5
+Heaps;23.5
+Higher-order Functions;1.4
+Image Processing;13.7
+Information Systems;4.666666666666667
+Inheritance;6.5
+Integers;9.238095238095237
+Interpreters;52.05
+Interview Questions;2.5
+Iterators;14.38888888888889
+JSON;8.625
+Lambdas;1.5
+Language Features;17.74
+Language Quirks;1.5
+Language Syntax;45.0
+Linear Algebra;23.771428571428572
+Linked Lists;41.55882352941177
+Lists;36.6833855799373
+Logic;15.481349911190053
+Logic Programming;2.0
+Loops;8.580645161290322
+Machine Learning;14.125
+Macros;7.6
+Map/Reduce;3.0
+Mapping;2.0
+Maps;2.0
+Mathematics;27.700248756218905
+Matrix;21.56756756756757
+Memoization;29.923076923076923
+Metaprogramming;15.966101694915254
+Methods;1.0
+Modules;1.5
+Monads;21.142857142857142
+MongoDB;40.0
+Networks;31.238095238095237
+Neural Networks;1.0
+NumPy;5.666666666666667
+Number Theory;30.557142857142857
+Numbers;7.925
+Object-oriented Programming;25.333333333333332
+Objects;1.5
+Operators;35.666666666666664
+Optimization;5.2
+Parsing;36.72477064220183
+Performance;18.992424242424242
+Permutations;20.803571428571427
+Physics;6.5
+Pitfalls;1.5
+Polymorphism;6.5
+Priority Queues;12.0
+Probability;12.131578947368421
+Programming Paradigms;5.975
+Programming Principles;3.0
+Promises;6.9
+Properties;12.0
+Puzzles;14.199644549763033
+Python Packages;1.5
+Queues;36.083333333333336
+Ranges;1.5
+React;15.5
+Reactive Programming;1.5
+Recursion;19.763736263736263
+Refactoring;31.175675675675677
+Reflection;6.684210526315789
+Regular Expressions;37.33021077283372
+Restricted;14.313492063492063
+Reverse Engineering;35.5
+Riddles;15.444444444444445
+Rules;23.0
+RxJS;1.5
+SQL;50.03636363636364
+Scheduling;12.8
+Scopes;12.0
+Search;2.0
+Searching;13.333333333333334
+Security;17.164835164835164
+Sequences;1.75
+Set Theory;10.5
+Sets;18.416666666666668
+Shape Modeling;1.0
+Simulation;11.0
+Singleton;23.4
+Sorting;29.777310924369747
+Stacks;9.636363636363637
+State Machines;56.0
+Statistics;11.830188679245284
+Streams;9.071428571428571
+String Formatting;1.0
+Strings;40.42052194543298
+Structs;1.5
+Tables;1.0
+Testing;1.0
+Theorem Proving;6.104
+Theoretical Computer Science;2.0
+Threads;6.0
+Trees;20.81578947368421
+Tutorials;25.0
+Type Conversion;3.0
+Unicode;9.272727272727273
+Utilities;14.333333333333334
+Validation;2.0
+Variables;24.0
+Vectors;1.5
+Web Scraping;3.5
+Web3;4.714285714285714
+numpy;1.0
+pandas;2.0
+split;49.5

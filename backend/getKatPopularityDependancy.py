@@ -30,23 +30,28 @@ def get_kat_id_kat_dict():
 
 # Статистика по среднему числу решений ката в зависимости от его категории
 def get_kat_category_stat():
-  katCategoryStat = {}
+  katTagStat = {}
   katas = get_kat_id_kat_dict()
+  print_tags = False
   for user in get_users_cursor():
     for t in user['userCompletedTasks']:
       for task in t:
         if (type(task) is dict and 'id' in task):
-          category = 'no category'
-          if task['id'] in katas and 'category' in katas[task['id']]:
-            category = katas[task['id']]['category']
-          if category not in katCategoryStat:
-            katCategoryStat[category] = {}
-          if task['id'] in katCategoryStat[category]:
-            katCategoryStat[category][task['id']] = katCategoryStat[category][task['id']] + 1
-          else:
-            katCategoryStat[category][task['id']] = 1
-  name = 'kat_category_stat.csv'
-  sortedDict = collections.OrderedDict(sorted(katCategoryStat.items()))
+          tags = []
+          if task['id'] in katas and 'tags' in katas[task['id']]:
+            tags = katas[task['id']]['tags']
+            if not print_tags:
+              print(tags)
+              print_tags = True
+          for tag in tags:
+            if tag not in katTagStat:
+              katTagStat[tag] = {}
+            if task['id'] in katTagStat[tag]:
+              katTagStat[tag][task['id']] = katTagStat[tag][task['id']] + 1
+            else:
+              katTagStat[tag][task['id']] = 1
+  name = 'kat_tags_stat.csv'
+  sortedDict = collections.OrderedDict(sorted(katTagStat.items()))
   with open(name, 'w', newline='') as csvfile:
     spamwriter = csv.writer(csvfile, delimiter=';', quotechar='|', quoting=csv.QUOTE_MINIMAL)
     names = ['category', 'Avg kat completed']
