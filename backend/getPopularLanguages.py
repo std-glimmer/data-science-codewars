@@ -50,7 +50,7 @@ def get_common_stat():
       
       rank["topLanguage"] = { maxSolution: max }
 
-   with open('E:\\projects\\data-science-codewars\\backend\\data\\languagesStat.json', 'w', newline='') as file:
+   with open('languagesStat.json', 'w', newline='') as file:
       file.write(json.dumps(rankStat))
       file.close()
 

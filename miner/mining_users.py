@@ -129,4 +129,4 @@ def mining_users(targetPath):
     kata_ids_file.close()
     invalid_users_file.close()
 
-mining_users("E:\\projects\\data-science-codewars\\miner\\data")
+mining_users(".\\")

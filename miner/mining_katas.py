@@ -12,9 +12,9 @@ def readListFromFile(filePath):
     file.close()
     return lst
 
-ids = readListFromFile("E:\\projects\\data-science-codewars\\miner\\data\\kata_ids.txt")
+ids = readListFromFile(".\\kata_ids.txt")
 
-file = open("E:\\projects\\data-science-codewars\\miner\\data\\katas.json", 'a+')
+file = open("katas.json", 'a+')
 file.write("[\n")
 for id in ids:
     try:

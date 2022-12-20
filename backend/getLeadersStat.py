@@ -43,7 +43,7 @@ def getLeadersStat():
       "data": leadersStat
    }
 
-   with open('E:\\projects\\data-science-codewars\\backend\\data\\top100Stat.json', 'w', newline='') as file:
+   with open('top100Stat.json', 'w', newline='') as file:
       file.write(json.dumps(result))
       file.close()
 

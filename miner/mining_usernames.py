@@ -20,7 +20,7 @@ def startMiningUsernames():
     print("In total ", len(usernames), " unique users")
 
     print("Saving...")
-    userFile = open("E:\\projects\\data-science-codewars\\miner\\data\\users.txt", 'a+')
+    userFile = open("users.txt", 'a+')
     for user in usernames:
         try:
             userFile.write(user + "\n")
